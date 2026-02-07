@@ -17,3 +17,17 @@ def get_tabungan(params = Depends(standard_query_params),db = Depends(get_db)):
     tabungans = results.all()
     
     return tabungans
+
+
+@tabungan_router.post("/tabungan", status_code=status.HTTP_201_CREATED)
+def create_tabungan(body: TabunganRequest, db = Depends(get_db)):
+    try:
+        new_tabungan = Tabungan(nama=body.nama, jumlah=body.jumlah, description=body.description)
+        db.add(new_tabungan)
+        db.commit()
+        db.refresh(new_tabungan)
+        
+        return {"message": "Tabungan created successfully", "data": new_tabungan}
+    
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
