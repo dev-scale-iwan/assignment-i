@@ -1,16 +1,18 @@
+from app.router.tabungan import tabungan_router
 from fastapi import FastAPI
+from app.core.setting import settings
+from scalar_fastapi import get_scalar_api_reference
 
-app = FastAPI()
+app = FastAPI(
+    title=settings.APP_NAME,
+    version=settings.VERSION,
+)
 
+app.include_router(tabungan_router)
 
-@app.get("/")
-def read_root():
-    return {"message": "Hello from assignment-1!"}
-
-
-def main():
-    print("Hello from assignment-1!")
-
-
-if __name__ == "__main__":
-    main()
+@app.get("/scalar")
+def get_scalar():
+    return get_scalar_api_reference(
+        openapi_url=app.openapi_url,
+        title=app.title,
+    )
