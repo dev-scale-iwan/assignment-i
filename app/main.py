@@ -10,6 +10,10 @@ app = FastAPI(
 
 app.include_router(tabungan_router)
 
+@app.get("/")
+def root():
+    return {"hallo": "Iwan Susanto"}
+
 @app.get("/scalar")
 def get_scalar():
     return get_scalar_api_reference(
