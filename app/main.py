@@ -12,7 +12,7 @@ app.include_router(tabungan_router)
 
 @app.get("/")
 def root():
-    return {"hallo": "Iwan Susanto"}
+    return {"hallo": "Iwan Susanto", "description": "Assignment 2"}
 
 @app.get("/scalar")
 def get_scalar():
