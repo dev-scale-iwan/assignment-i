@@ -10,6 +10,10 @@ tabungan_router = APIRouter(
     tags=["Tabungan"],
 )
 
+@tabungan_router.get("/", status_code=status.HTTP_200_OK)
+def root():
+    return {"hallo": "Iwan Susanto"}
+
 @tabungan_router.get("/tabungan", status_code=status.HTTP_200_OK)
 def get_tabungan(params = Depends(standard_query_params),db = Depends(get_db)):
     query = select(Tabungan)
